@@ -30,22 +30,22 @@ describe('Contact class tests', () => {
         expect(contact.name).toEqual('Liz');
     });
 
-    it('should get and set name correctly', () => {
+    it('should get and set country correctly', () => {
         contact.country = 'USA';
         expect(contact.country).toEqual('USA');
     });
 
-    it('should get and set name correctly', () => {
+    it('should get and set email correctly', () => {
         contact.email = '1@2.com';
         expect(contact.email).toEqual('1@2.com');
     });
 
-    it('should get and set name correctly', () => {
+    it('should get and set favorite correctly', () => {
         contact.favorite = true;
         expect(contact.favorite).toEqual(true);
     });
 
-    it('should get and set name correctly', () => {
+    it('should get and set number correctly', () => {
         contact.number = '1234567890';
         expect(contact.number).toEqual('1234567890');
     });

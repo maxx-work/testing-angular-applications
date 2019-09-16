@@ -1,5 +1,5 @@
 import { DebugElement } from '@angular/core';
-import { ComponentFixture, fakeAsync, TestBed, tick, async } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserDynamicTestingModule } from '@angular/platform-browser-dynamic/testing';
@@ -16,6 +16,8 @@ import {
  } from '../shared';
 import { AppMaterialModule } from '../../app.material.module';
 import { ContactEditComponent } from './contact-edit.component';
+
+import '../../../material-app-theme.scss';
 
 describe('ContactEditComponent tests', () => {
     let fixture: ComponentFixture<ContactEditComponent>;
@@ -74,5 +76,61 @@ describe('ContactEditComponent tests', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
         rootElement = fixture.debugElement;
+    });
+
+    describe('saveContact() test', () => {
+        it('should display contact name after contact set', fakeAsync(() => {
+            const contact = {
+                id: 1,
+                name: 'lorace'
+            };
+
+            component.isLoading = false;
+            component.saveContact(contact);
+            fixture.detectChanges();
+            const nameInput = rootElement.query(By.css('.contact-name'));
+            tick();
+            expect(nameInput.nativeElement.value).toBe('lorace');
+        }));
+    });
+
+    describe('loadContact() test', () => {
+        it('should load contact', fakeAsync(() => {
+            component.isLoading = false;
+            component.loadContact();
+            fixture.detectChanges();
+            const nameInput = rootElement.query(By.css('.contact-name'));
+            tick();
+            expect(nameInput.nativeElement.value).toBe('janet');
+        }));
+    });
+
+    describe('updateContact() test', () => {
+        it('should update the contact', fakeAsync(() => {
+            const newContact = {
+                id: 1,
+                name: 'delia',
+                email: 'delia@example.com',
+                number: '1234567890'
+            };
+
+            component.contact = {
+                id: 2,
+                name: 'rhonda',
+                email: 'rhonda@example.com',
+                number: '1234567890'
+            };
+
+            component.isLoading = false;
+            fixture.detectChanges();
+            const nameInput = rootElement.query(By.css('.contact-name'));
+            tick();
+            expect(nameInput.nativeElement.value).toBe('rhonda');
+
+            component.updateContact(newContact);
+            fixture.detectChanges();
+            tick(100);
+            expect(nameInput.nativeElement.value).toBe('delia');
+        }));
     });
 });
